@@ -27,10 +27,8 @@ export class PwbsSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
 
-    containerEl.createEl("h2", { text: "PWBS \u2013 Einstellungen" });
-
     // Connection section
-    containerEl.createEl("h3", { text: "Verbindung" });
+    new Setting(containerEl).setName("Verbindung").setHeading();
 
     new Setting(containerEl)
       .setName("API URL")
@@ -48,7 +46,7 @@ export class PwbsSettingTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName("API Token")
       .setDesc(
-        "Dein pers\u00f6nlicher API-Token. Findest du unter pwbs.app \u2192 Einstellungen \u2192 API.",
+        "Dein persönlicher API-Token. Findest du unter pwbs.app → Einstellungen → API.",
       )
       .addText((text) => {
         text
@@ -63,18 +61,18 @@ export class PwbsSettingTab extends PluginSettingTab {
 
     const testBtn = new Setting(containerEl)
       .setName("Verbindung testen")
-      .setDesc("Pr\u00fcft ob API-URL und Token korrekt sind");
+      .setDesc("Prüft ob API-URL und Token korrekt sind");
 
     testBtn.addButton((btn) =>
       btn.setButtonText("Testen").onClick(async () => {
         btn.setDisabled(true);
-        btn.setButtonText("Teste\u2026");
+        btn.setButtonText("Teste…");
         try {
           const user = await this.plugin.api.getMe();
-          testBtn.setDesc(`\u2705 Verbunden als ${user.display_name}`);
+          testBtn.setDesc(`✅ Verbunden als ${user.display_name}`);
         } catch (e) {
           testBtn.setDesc(
-            `\u274c ${e instanceof Error ? e.message : "Verbindungsfehler"}`,
+            `❌ ${e instanceof Error ? e.message : "Verbindungsfehler"}`,
           );
         } finally {
           btn.setDisabled(false);
@@ -84,7 +82,7 @@ export class PwbsSettingTab extends PluginSettingTab {
     );
 
     // Sync section
-    containerEl.createEl("h3", { text: "Synchronisation" });
+    new Setting(containerEl).setName("Synchronisation").setHeading();
 
     new Setting(containerEl)
       .setName("Ausgeschlossene Ordner")
@@ -117,13 +115,13 @@ export class PwbsSettingTab extends PluginSettingTab {
       );
 
     // Info section
-    containerEl.createEl("h3", { text: "\u00dcber PWBS" });
+    new Setting(containerEl).setName("Info").setHeading();
     containerEl.createEl("p", {
-      text: "PWBS verwandelt dein Wissen in kontextbezogene Briefings \u2013 morgens, vor Meetings oder f\u00fcr Projekte.",
+      text: "PWBS verwandelt dein Wissen in kontextbezogene Briefings – morgens, vor Meetings oder für Projekte.",
       cls: "setting-item-description",
     });
     containerEl.createEl("a", {
-      text: "\u2192 Mehr erfahren auf pwbs.app",
+      text: "→ Mehr erfahren auf pwbs.app",
       href: "https://pwbs.app",
     });
   }
